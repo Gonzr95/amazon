@@ -57,7 +57,9 @@ export function renderOrderSummary() {
            
         cartSummaryHTML += 
         `
-        <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
+        <div class="cart-item-container 
+            js-cart-item-container
+            js-cart-item-container-${matchingProduct.id}">
             <div class="delivery-date">
                 Delivery date: ${dayString}
             </div>
@@ -73,14 +75,15 @@ export function renderOrderSummary() {
                 <div class="product-price">
                     ${formatCurrency(matchingProduct.priceCents)}
                 </div>
-                <div class="product-quantity">
+                <div class="product-quantity
+                    js-product-quantity-${matchingProduct.id}">
                     <span>
-                    Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                        Quantity: <span class="quantity-label">${cartItem.quantity}</span>
                     </span>
                     <span class="update-quantity-link link-primary">
-                    Update
+                        Update
                     </span>
-                    <span class="delete-quantity-link js-delete-quantity-click link-primary" data-product-id="${matchingProduct.id}">
+                    <span class="delete-quantity-link link-primary js-delete-link  js-delete-link-${matchingProduct.id}" data-product-id="${matchingProduct.id}">
                     Delete
                     </span>
                 </div>
@@ -102,15 +105,15 @@ export function renderOrderSummary() {
     });
     
     
-    document.querySelector('.js-order-sumary').innerHTML = cartSummaryHTML;
+    document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
     
-    document.querySelectorAll('.js-delete-quantity-click').forEach((deleteLink) => {
+    document.querySelectorAll('.js-delete-link').forEach((deleteLink) => {
         deleteLink.addEventListener('click', () => {
             const productId = deleteLink.getAttribute('data-product-id');
-            //console.log('delete clicked', productId);
             removeItemFromCart(productId);
             //deleteLink.closest('.cart-item-container').remove(); QUE ES ESTO
-            document.querySelector(`.js-cart-item-container-${productId}`).remove();
+            const container = document.querySelector(`.js-cart-item-container-${productId}`);
+            container.remove();
             renderPaymentSummary();
         });
     });

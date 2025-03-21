@@ -39,10 +39,12 @@ export function addToCart(productId){
       });
     }
     saveToStorage();
-    console.log(cart);
+
 }
 
 export function removeItemFromCart(productId){
+  
+  /*
     cart.forEach((cartItem, index) => {
       if(productId === cartItem.productId){
         cart.splice(index, 1);
@@ -50,6 +52,19 @@ export function removeItemFromCart(productId){
     });
     saveToStorage();
     console.log(cart);
+    */
+
+    
+    const newCart = [];
+
+    cart.forEach((cartItem) => {
+      if (cartItem.productId !== productId) {
+        newCart.push(cartItem);
+      }
+    });
+    cart = newCart;
+    saveToStorage();
+    
 }
 
 export function saveToStorage() {
